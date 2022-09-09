@@ -21,8 +21,8 @@ export default function Home() {
       </p>
       <p className='py-2 leading-7 px-4'>
         My initial thoughts were to create a &#34;cool&#34; interactive
-        portfolio, I'm a web developer student after all. However, after some
-        late-night reflection, I concluded that if any site should{' '}
+        portfolio, I&apos;m a web developer student after all. However, after
+        some late-night reflection, I concluded that if any site should{' '}
         <span className='font-semibold'>reflect me</span> it should obviously be
         my portfolio.
       </p>
