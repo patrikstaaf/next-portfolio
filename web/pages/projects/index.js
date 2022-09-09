@@ -12,9 +12,9 @@ export default function Projects({ projects }) {
       <p className='mb-8 px-4 leading-7'>
         Below are some of my projects that I hope to soon look back at with
         great disgrace (read improvement). I also look forward to the day when I
-        can say “I let my work speak for itself”, but apart from my dry, deadpan
-        humor, I do take pride in my work and strive daily to improve, step by
-        step (error by error).
+        can say &quot;I let my work speak for itself&quot;, but apart from my
+        dry, deadpan humor, I do take pride in my work and strive daily to
+        improve, step by step (error by error).
       </p>
       <ul>
         {projects &&
