@@ -5,7 +5,7 @@ export default function Footer() {
       <span className='px-1 text-gray-500'>•</span>
       <small className='text-gray-500'>
         <a
-          href='https://github.com/patrikstaaf/portfolio'
+          href='https://github.com/patrikstaaf/next-portfolio'
           className='hover:underline'
           target='_blank'
           rel='noopener noreferrer'

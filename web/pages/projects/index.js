@@ -44,28 +44,6 @@ export default function Projects({ projects }) {
   );
 }
 
-// export async function getStaticPaths() {
-//   const query = `*[_type == "project"] {
-//     _id,
-//     slug {
-//       current
-//     }
-//   } `;
-
-//   const projects = await sanity.fetch(query);
-
-//   const paths = projects.map((project) => ({
-//     params: {
-//       slug: project.slug.current,
-//     },
-//   }));
-
-//   return {
-//     paths,
-//     fallback: 'blocking',
-//   };
-// }
-
 export async function getStaticProps() {
   const query = `*[_type=="project"] | order(order asc)`;
 
@@ -75,6 +53,6 @@ export async function getStaticProps() {
     props: {
       projects,
     },
-    revalidate: 1,
+    revalidate: 10,
   };
 }
