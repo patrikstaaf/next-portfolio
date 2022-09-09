@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start:sanity": "cd sanity && sanity start",
-    "start:frontend": "cd client && npm run dev",
+    "start:frontend": "cd web && npm run dev",
     "start": "concurrently \"npm run start:sanity\" \"npm run start:frontend\"",
     "install:sanity": "cd sanity && npm install",
-    "install:frontend": "cd client && npm install",
-    "postinstall": "(cd sanity && npm install); (cd client && npm install)"
+    "install:frontend": "cd web && npm install",
+    "postinstall": "(cd sanity && npm install); (cd web && npm install)"
   },
   "keywords": [],
   "author": "",
