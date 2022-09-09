@@ -2,6 +2,7 @@ import sanity from '../../sanity';
 import imageUrlBuilder from '@sanity/image-url';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const builder = imageUrlBuilder(sanity);
 
@@ -33,11 +34,15 @@ export default function SingleProject({ singleProject }) {
           </Link>
         </div>
       </div>
-      <img
-        src={urlFor(singleProject.projectImage).url()}
-        alt={singleProject.projectImage.alt}
-        className='mx-auto my-6 px-4 rounded-lg'
-      />
+      <div className='mx-auto my-6 px-4 rounded-lg'>
+        <Image
+          src={urlFor(singleProject.projectImage).url()}
+          alt={singleProject.projectImage.alt}
+          className='rounded-lg'
+          width={1010}
+          height={673}
+        />
+      </div>
       <p className='mb-4 text-left px-4 leading-7'>
         {singleProject.description}
       </p>
