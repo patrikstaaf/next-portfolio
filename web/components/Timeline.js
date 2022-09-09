@@ -239,8 +239,8 @@ export default function Timeline() {
           Met my wife in Australia
         </p>
         <span className='text-xs sm:left-[53%] top-[60%] absolute text-gray-500 hidden sm:block'>
-          She's from Colombia and we got married 2018 in Paris... happy wife,
-          happy life.
+          She&apos;s from Colombia and we got married 2018 in Paris... happy
+          wife, happy life.
         </span>
         <p className='left-[33%] sm:left-[40%] top-[55%] absolute'>2015</p>
         <p className='left-[53%] top-[78%] absolute'>
