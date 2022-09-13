@@ -1,24 +1,3 @@
-// import { isValidRequest } from '@sanity/webhook';
-
-// const secret = process.env.SANITY_WEBHOOK_SECRET;
-
-// import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook';
-
-// import { isValidRequest } from '@sanity/webhook';
-
-// const secret = process.env.SANITY_WEBHOOK_SECRET;
-
-// export default async function handler(req, res) {
-//   console.log(req.query.secret);
-//   if (req.method !== 'POST') {
-//     console.error('Must be a POST request');
-//     return res.status(401).json({ message: 'Must be a POST request' });
-//   }
-
-//   if (req.query.secret.toString() === secret.toString()) {
-//     return res.status(401).json({ message: 'Invalid signature' });
-//   }
-
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook';
 
 const secret = process.env.SANITY_WEBHOOK_SECRET;
@@ -39,12 +18,11 @@ export default async function handler(req, res) {
     switch (type) {
       case 'post':
         await res.revalidate(`/projects/${slug}`);
+        console.log('ok', { slug });
         return res.json({
           message: `Revalidated "${type}" with slug "${slug}"`,
         });
     }
-
-    console.log('OK');
     return res.json({ message: 'No managed type' });
   } catch (err) {
     console.log(err);
@@ -65,29 +43,3 @@ export const config = {
     bodyParser: false,
   },
 };
-
-// export default async function handler(req, res) {
-//   if (req.method !== 'POST') {
-//     console.error('Must be a POST request');
-//     return res.status(400).json({ message: 'Must be a POST request' });
-//   }
-
-//   if (req.query.secret !== secret) {
-//     return res.status(401).json({ message: 'Invalid secret' });
-//   }
-
-//   try {
-//     const body = req.body;
-//     if (!body) {
-//       return res.status(400).send('Bad request, no body');
-//     }
-
-//     const slugToRevalidate = body.slugToRevalidate;
-//     if (slugToRevalidate) {
-//       await res.unstable_revalidate(`/projects/${slugToRevalidate}`);
-//       return res.json({ revalidated: true });
-//     }
-//   } catch (err) {
-//     return res.status(500).send({ message: 'Error revalidating' });
-//   }
-// }
