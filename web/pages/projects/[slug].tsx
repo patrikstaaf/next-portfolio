@@ -125,17 +125,15 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const query = `*[_type=="project" && slug.current == $slug][0] {
-    description,
-    title,
-    slug,
-    projectType,
-    tags,
-    projectScreenshot,
-    projectScreenshotAlt,
-    link,
-    github,
-    "projectScreenshot": projectImage.asset->url,
-    "projectScreenshotAlt": projectImage.alt,
+description,
+title,
+slug,
+projectType,
+tags,
+link,
+github,
+"projectScreenshot": projectImage.asset->url,
+"projectScreenshotAlt": projectImage.alt,
   }`;
 
   const { slug } = params as IParams;
