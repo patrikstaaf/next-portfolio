@@ -4,30 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { getSingleProject } from '../../sanity/queries';
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
 }
 
-interface Props {
-  data: {
-    title: string;
-    slug: {
-      _type: string;
-      current: string;
-    };
-    projectType: string;
-    tags: string[];
-    projectScreenshot: string;
-    projectScreenshotAlt?: string;
-    description: string;
-    link?: string;
-    github?: string;
-  };
-}
-
-interface Project {
+interface IProject {
   title: string;
   slug: {
     _type: string;
@@ -42,8 +24,11 @@ interface Project {
   github: string;
 }
 
-const SingleProject: NextPage<Props> = ({ data }) => {
-  console.log(data);
+interface IProps {
+  data: IProject;
+}
+
+const SingleProject: NextPage<IProps> = ({ data }) => {
   const router = useRouter();
   return (
     <>
@@ -124,7 +109,7 @@ export async function getStaticPaths() {
     }
    }`;
 
-  const projects: Project[] = await sanity.fetch(query);
+  const projects: IProject[] = await sanity.fetch(query);
 
   const paths = projects.map((project) => ({
     params: {
@@ -140,14 +125,22 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const query = `*[_type=="project" && slug.current == $slug][0] {
+    description,
+    title,
+    slug,
+    projectType,
+    tags,
+    projectScreenshot,
+    projectScreenshotAlt,
+    link,
+    github,
     "projectScreenshot": projectImage.asset->url,
     "projectScreenshotAlt": projectImage.alt,
-    ...
   }`;
 
   const { slug } = params as IParams;
 
-  const data: Props = await sanity.fetch(query, {
+  const data: IProps = await sanity.fetch(query, {
     slug: slug,
   });
 

@@ -3,7 +3,7 @@ import sanity from '../../sanity';
 import Link from 'next/link';
 import { NextPage } from 'next';
 
-interface Props {
+interface IProps {
   data: {
     _id: string;
     slug: {
@@ -16,7 +16,7 @@ interface Props {
   }[];
 }
 
-const Projects: NextPage<Props> = ({ data }) => {
+const Projects: NextPage<IProps> = ({ data }) => {
   return (
     <>
       <h1 className='font-extrabold text-4xl mb-8 text-slate-800 px-4'>
@@ -69,7 +69,7 @@ year,
 slug
 }`;
 
-  const data: Props[] = await sanity.fetch(query);
+  const data: IProps[] = await sanity.fetch(query);
 
   return {
     props: {

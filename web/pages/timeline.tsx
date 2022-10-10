@@ -1,7 +1,8 @@
 import Timeline from '../components/Timeline';
 import Navbar from '../components/Navbar';
+import { NextPage } from 'next';
 
-export default function TimelinePage() {
+const TimelinePage: NextPage = () => {
   return (
     <>
       <h1 className='font-extrabold text-4xl mb-8 text-slate-800 px-4'>
@@ -19,4 +20,6 @@ export default function TimelinePage() {
       <Timeline />
     </>
   );
-}
+};
+
+export default TimelinePage;
