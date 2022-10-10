@@ -1,14 +1,7 @@
 import sanity from '../../sanity';
-import imageUrlBuilder from '@sanity/image-url';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-
-const builder = imageUrlBuilder(sanity);
-
-function urlFor(source) {
-  return builder.image(source);
-}
 
 export default function SingleProject({ singleProject }) {
   const router = useRouter();
@@ -36,8 +29,8 @@ export default function SingleProject({ singleProject }) {
       </div>
       <div className='mx-auto my-6 px-4 rounded-lg'>
         <Image
-          src={urlFor(singleProject.projectImage).url()}
-          alt={singleProject.projectImage.alt}
+          src={singleProject.projectScreenshot}
+          alt={singleProject.projectScreenshotAlt}
           className='rounded-lg'
           width={1010}
           height={673}
@@ -106,7 +99,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const query = `*[_type=="project" && slug.current == $slug][0]`;
+  const query = `*[_type=="project" && slug.current == $slug][0] {
+    "projectScreenshot": projectImage.asset->url,
+    "projectScreenshotAlt": projectImage.alt,
+    ...
+  }`;
 
   const singleProject = await sanity.fetch(query, {
     slug: params.slug,
