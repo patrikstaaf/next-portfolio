@@ -17,9 +17,9 @@ export default async function handler(
   //   return;
   // }
 
-  if (req.query.secret !== process.env.SANITY_WEBHOOK_SECRET) {
-    return res.status(401).json({ message: 'Invalid token' });
-  }
+  // if (req.query.secret !== process.env.SANITY_WEBHOOK_SECRET) {
+  //   return res.status(401).json({ message: 'Invalid token' });
+  // }
 
   try {
     const { slug } = req.body;
