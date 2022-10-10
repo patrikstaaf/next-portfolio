@@ -1,7 +1,8 @@
+import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function Navbar() {
+const Navbar: NextPage = () => {
   const router = useRouter();
   const currentRoute = router.pathname;
   return (
@@ -41,4 +42,6 @@ export default function Navbar() {
       </Link>
     </nav>
   );
-}
+};
+
+export default Navbar;

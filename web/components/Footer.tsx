@@ -1,4 +1,6 @@
-export default function Footer() {
+import { NextPage } from 'next';
+
+const Footer: NextPage = () => {
   return (
     <footer className='mt-10 px-4'>
       <small>{new Date().getFullYear()} &copy; Patrik Staaf</small>
@@ -15,4 +17,6 @@ export default function Footer() {
       </small>
     </footer>
   );
-}
+};
+
+export default Footer;

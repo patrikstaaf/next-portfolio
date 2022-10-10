@@ -1,4 +1,6 @@
-export default function Timeline() {
+import { NextPage } from 'next';
+
+const Timeline: NextPage = () => {
   return (
     <div className='px-4 pt-12 pb-4 font-special not-prose'>
       <div className='w-full flex justify-center relative'>
@@ -262,4 +264,6 @@ export default function Timeline() {
       </div>
     </div>
   );
-}
+};
+
+export default Timeline;
