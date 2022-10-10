@@ -2,20 +2,45 @@ import sanity from '../../sanity';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { GetStaticProps, NextPage } from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-export default function SingleProject({ singleProject }) {
+interface IParams extends ParsedUrlQuery {
+  slug: string;
+}
+
+interface IProject {
+  title: string;
+  slug: {
+    _type: string;
+    current: string;
+  };
+  projectType: string;
+  tags: string[];
+  projectScreenshot: string;
+  projectScreenshotAlt: string;
+  description: string;
+  link: string;
+  github: string;
+}
+
+interface IProps {
+  data: IProject;
+}
+
+const SingleProject: NextPage<IProps> = ({ data }) => {
   const router = useRouter();
   return (
     <>
       <h1 className='font-extrabold text-4xl mb-8 text-slate-800 px-4'>
-        {singleProject.title}
+        {data.title}
       </h1>
       <div className='w-full flex justify-between h-full items-center px-4'>
         <div className='flex flex-wrap items-center'>
-          <span className='text-gray-500'>{singleProject.projectType}</span>
+          <span className='text-gray-500'>{data.projectType}</span>
           <span className='px-2 text-gray-500'>•</span>
-          {singleProject.tags.length > 0 &&
-            singleProject.tags.map((tag, index) => (
+          {data.tags.length > 0 &&
+            data.tags.map((tag, index) => (
               <span className=' bg-gray-200 rounded-lg p-1 mx-1' key={index}>
                 {tag}
               </span>
@@ -29,52 +54,52 @@ export default function SingleProject({ singleProject }) {
       </div>
       <div className='mx-auto my-6 px-4 rounded-lg'>
         <Image
-          src={singleProject.projectScreenshot}
-          alt={singleProject.projectScreenshotAlt}
+          src={data.projectScreenshot}
+          alt={data.projectScreenshotAlt}
           className='rounded-lg'
           width={1010}
           height={673}
         />
       </div>
-      <p className='mb-4 text-left px-4 leading-7'>
-        {singleProject.description}
-      </p>
+      <p className='mb-4 text-left px-4 leading-7'>{data.description}</p>
       <div className='px-4'>
-        {!singleProject.link ? (
+        {!data.link ? (
           <p className='py-1 leading-7'>Url: Not deployed.</p>
         ) : (
           <p className='py-1 leading-7'>
             Url:{' '}
             <a
-              href={singleProject.link}
+              href={data.link}
               className='underline text-blue-600 underline-offset-4'
               target='_blank'
               rel='noopener noreferrer'
             >
-              {singleProject.link}
+              {data.link}
             </a>
           </p>
         )}
 
-        {!singleProject.github ? (
+        {!data.github ? (
           <p className='py-1 leading-7'>GitHub: Private repo.</p>
         ) : (
           <p className='py-1 leading-7'>
             GitHub:{' '}
             <a
-              href={singleProject.github}
+              href={data.github}
               className='underline text-blue-600 underline-offset-4'
               target='_blank'
               rel='noopener noreferrer'
             >
-              {singleProject.github}
+              {data.github}
             </a>
           </p>
         )}
       </div>
     </>
   );
-}
+};
+
+export default SingleProject;
 
 export async function getStaticPaths() {
   const query = `*[_type == "project"] { 
@@ -82,9 +107,9 @@ export async function getStaticPaths() {
     slug {
         current
     }
-   } `;
+   }`;
 
-  const projects = await sanity.fetch(query);
+  const projects: IProject[] = await sanity.fetch(query);
 
   const paths = projects.map((project) => ({
     params: {
@@ -98,25 +123,35 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const query = `*[_type=="project" && slug.current == $slug][0] {
+    description,
+    title,
+    slug,
+    projectType,
+    tags,
+    projectScreenshot,
+    projectScreenshotAlt,
+    link,
+    github,
     "projectScreenshot": projectImage.asset->url,
     "projectScreenshotAlt": projectImage.alt,
-    ...
   }`;
 
-  const singleProject = await sanity.fetch(query, {
-    slug: params.slug,
+  const { slug } = params as IParams;
+
+  const data: IProps = await sanity.fetch(query, {
+    slug: slug,
   });
 
-  if (!singleProject) {
+  if (!data) {
     return {
       notFound: true,
     };
   }
   return {
     props: {
-      singleProject,
+      data,
     },
   };
-}
+};

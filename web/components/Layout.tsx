@@ -1,8 +1,14 @@
+import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import React from 'react';
 import Footer from './Footer';
 
-export default function Layout({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+const Layout: NextPage<Props> = ({ children }) => {
   const router = useRouter();
   return (
     <>
@@ -54,4 +60,6 @@ export default function Layout({ children }) {
       </div>
     </>
   );
-}
+};
+
+export default Layout;

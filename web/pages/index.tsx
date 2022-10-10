@@ -1,6 +1,7 @@
+import { NextPage } from 'next';
 import Navbar from '../components/Navbar';
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
       <h1 className='font-extrabold text-4xl mb-8 text-slate-800 px-4'>
@@ -67,4 +68,6 @@ export default function Home() {
       </p>
     </>
   );
-}
+};
+
+export default Home;

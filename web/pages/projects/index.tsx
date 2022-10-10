@@ -1,8 +1,22 @@
 import Navbar from '../../components/Navbar';
 import sanity from '../../sanity';
 import Link from 'next/link';
+import { NextPage } from 'next';
 
-export default function Projects({ projects }) {
+interface IProps {
+  data: {
+    _id: string;
+    slug: {
+      _type: string;
+      current: string;
+    };
+    title: string;
+    explanation: string;
+    year: string;
+  }[];
+}
+
+const Projects: NextPage<IProps> = ({ data }) => {
   return (
     <>
       <h1 className='font-extrabold text-4xl mb-8 text-slate-800 px-4'>
@@ -17,8 +31,8 @@ export default function Projects({ projects }) {
         step by step (error by error).
       </p>
       <ul>
-        {projects &&
-          projects.map((project) => (
+        {data &&
+          data.map((project) => (
             <li
               key={project._id}
               className='w-full hover:bg-gray-50 rounded-lg my-2 relative'
@@ -42,16 +56,24 @@ export default function Projects({ projects }) {
       </ul>
     </>
   );
-}
+};
+
+export default Projects;
 
 export async function getStaticProps() {
-  const query = `*[_type=="project"] | order(order asc)`;
+  const query = `*[_type=="project"] | order(order asc) {
+_id,
+title,
+explanation,
+year,
+slug
+}`;
 
-  const projects = await sanity.fetch(query);
+  const data: IProps[] = await sanity.fetch(query);
 
   return {
     props: {
-      projects,
+      data,
     },
   };
 }
