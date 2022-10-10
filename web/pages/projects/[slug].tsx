@@ -36,12 +36,12 @@ const SingleProject: NextPage<IProps> = ({ data }) => {
         {data.title}
       </h1>
       <div className='w-full flex justify-between h-full items-center px-4'>
-        <div className='flex flex-wrap items-center'>
+        <div className='flex flex-wrap items-center gap-y-2'>
           <span className='text-gray-500'>{data.projectType}</span>
           <span className='px-2 text-gray-500'>•</span>
           {data.tags.length > 0 &&
             data.tags.map((tag, index) => (
-              <span className=' bg-gray-200 rounded-lg p-1 mx-1' key={index}>
+              <span className=' bg-gray-200 rounded-lg p-1 mr-2' key={index}>
                 {tag}
               </span>
             ))}
