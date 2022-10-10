@@ -24,7 +24,7 @@ export default function Projects({ projects }) {
               className='w-full hover:bg-gray-50 rounded-lg my-2 relative'
             >
               <Link href={`/projects/${project.slug.current}`}>
-                <div className='flex justify-around p-4 cursor-pointer'>
+                <a className='flex justify-around p-4 cursor-pointer'>
                   <div>
                     <span className='mr-2 font-semibold'>{project.title}</span>
                     <span className='text-sm text-gray-500'>
@@ -35,7 +35,7 @@ export default function Projects({ projects }) {
                   <div>
                     <span>{project.year}</span>
                   </div>
-                </div>
+                </a>
               </Link>
             </li>
           ))}
@@ -53,6 +53,5 @@ export async function getStaticProps() {
     props: {
       projects,
     },
-    revalidate: 10,
   };
 }
